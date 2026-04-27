@@ -9,6 +9,11 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
+// TEST ROUTE (to confirm server is working)
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
 async function getAccessToken() {
   const res = await axios.get(
     "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
@@ -22,13 +27,20 @@ async function getAccessToken() {
   return res.data.access_token;
 }
 
-app.post("/pay", async (req,res)=>{
-  try{
+// PAY ROUTE (VERY IMPORTANT)
+app.post("/pay", async (req, res) => {
+  try {
     const { phone, amount } = req.body;
+
+    console.log("Received:", phone, amount); // debug
 
     const token = await getAccessToken();
 
-    const timestamp = new Date().toISOString().replace(/[-:.TZ]/g,"").slice(0,14);
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[-:.TZ]/g, "")
+      .slice(0, 14);
+
     const password = Buffer.from(
       process.env.SHORTCODE +
       process.env.PASSKEY +
@@ -50,19 +62,27 @@ app.post("/pay", async (req,res)=>{
         AccountReference: "J&R",
         TransactionDesc: "Payment"
       },
-      { headers: { Authorization: `Bearer ${token}` } }
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
 
     res.json(response.data);
 
-  }catch(err){
-    console.log(err);
-    res.status(500).send("Error");
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).json(err.response?.data || { error: "Something failed" });
   }
 });
 
-app.listen(PORT, ()=>console.log("Server running on 5000"));
+// CALLBACK ROUTE
 app.post("/callback", (req, res) => {
-  console.log("M-Pesa Callback:", req.body);
+  console.log("Callback:", req.body);
   res.sendStatus(200);
+});
+
+app.listen(PORT, () => {
+  console.log("Server running on", PORT);
 });
