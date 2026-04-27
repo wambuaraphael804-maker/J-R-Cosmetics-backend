@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 async function getAccessToken() {
   const res = await axios.get(
@@ -62,3 +62,7 @@ app.post("/pay", async (req,res)=>{
 });
 
 app.listen(PORT, ()=>console.log("Server running on 5000"));
+app.post("/callback", (req, res) => {
+  console.log("M-Pesa Callback:", req.body);
+  res.sendStatus(200);
+});
