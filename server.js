@@ -32,7 +32,7 @@ app.post("/pay", async (req, res) => {
   try {
     const { phone, amount } = req.body;
 
-    console.log("Received:", phone, amount); // debug
+    console.log("Received:", phone, amount);
 
     const token = await getAccessToken();
 
@@ -73,10 +73,9 @@ app.post("/pay", async (req, res) => {
 
   } catch (err) {
     console.error(err.response?.data || err.message);
-    res.status(500).json(err.response?.data || { error: "Something failed" });
+    res.status(500).json(err.response?.data || { error: "Payment failed" });
   }
 });
-
 // CALLBACK ROUTE
 app.post("/callback", (req, res) => {
   console.log("Callback:", req.body);
