@@ -71,11 +71,13 @@ A complete Express.js backend for an e-commerce cosmetics platform with user aut
    MPESA_PASSKEY=your_passkey_here
    MPESA_CALLBACK_URL=http://localhost:5000/api/payment/callback
    NGROK_URL=
+   USE_IN_MEMORY_DB=true
    FRONTEND_URL=http://localhost:3000
    ```
 
    - For local development, you can also use a local MongoDB URI:
      `MONGODB_URI=mongodb://127.0.0.1:27017/jr-cosmetics`
+   - If you want the app to start without a MongoDB server, set `USE_IN_MEMORY_DB=true` or leave `MONGODB_URI` blank in development.
    - For Render deployment, set `MONGODB_URI` in the Render environment variables dashboard.
 
 4. Start the server
