@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json)
 
 const PORT = process.env.PORT || 5000;
 
@@ -29,52 +29,7 @@ async function getAccessToken() {
 
 // PAY ROUTE (VERY IMPORTANT)
 app.post("/pay", async (req, res) => {
-  try {
-    const { phone, amount } = req.body;
-
-    console.log("Received:", phone, amount);
-
-    const token = await getAccessToken();
-
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-:.TZ]/g, "")
-      .slice(0, 14);
-
-    const password = Buffer.from(
-      process.env.SHORTCODE +
-      process.env.PASSKEY +
-      timestamp
-    ).toString("base64");
-
-    const response = await axios.post(
-      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
-      {
-        BusinessShortCode: process.env.SHORTCODE,
-        Password: password,
-        Timestamp: timestamp,
-        TransactionType: "CustomerPayBillOnline",
-        Amount: amount,
-        PartyA: phone,
-        PartyB: process.env.SHORTCODE,
-        PhoneNumber: phone,
-        CallBackURL: process.env.CALLBACK_URL,
-        AccountReference: "J&R",
-        TransactionDesc: "Payment"
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    res.json(response.data);
-
-  } catch (err) {
-    console.error(err.response?.data || err.message);
-    res.status(500).json(err.response?.data || { error: "Payment failed" });
-  }
+  res.json({ message: "Pay route is working" });
 });
 // CALLBACK ROUTE
 app.post("/callback", (req, res) => {
