@@ -61,9 +61,22 @@ A complete Express.js backend for an e-commerce cosmetics platform with user aut
    ```
    PORT=5000
    NODE_ENV=development
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/jr-cosmetics
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/jr-cosmetics?retryWrites=true&w=majority
    JWT_SECRET=your_secret_key_here
+   PAYMENT_PROVIDER=mpesa
+   MPESA_ENV=sandbox
+   MPESA_CONSUMER_KEY=your_mpesa_key_here
+   MPESA_CONSUMER_SECRET=your_mpesa_secret_here
+   MPESA_SHORTCODE=your_shortcode_here
+   MPESA_PASSKEY=your_passkey_here
+   MPESA_CALLBACK_URL=http://localhost:5000/api/payment/callback
+   NGROK_URL=
+   FRONTEND_URL=http://localhost:3000
    ```
+
+   - For local development, you can also use a local MongoDB URI:
+     `MONGODB_URI=mongodb://127.0.0.1:27017/jr-cosmetics`
+   - For Render deployment, set `MONGODB_URI` in the Render environment variables dashboard.
 
 4. Start the server
    ```bash
