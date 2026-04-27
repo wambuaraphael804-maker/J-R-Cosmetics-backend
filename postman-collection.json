@@ -1,0 +1,286 @@
+{
+  "info": {
+    "name": "J-R Cosmetics API",
+    "description": "Complete API collection for J-R Cosmetics e-commerce backend",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{JWT_TOKEN}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Public Endpoints",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/health"
+          }
+        },
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/products"
+          }
+        },
+        {
+          "name": "Get Products by Category",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/products?category=skincare"
+          }
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/products?search=moisturizer"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"name\": \"Test User\",\\n  \"email\": \"testuser@example.com\",\\n  \"password\": \"password123\"\\n}"
+            },
+            "url": "{{BASE_URL}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"email\": \"test@example.com\",\\n  \"password\": \"password123\"\\n}"
+            },
+            "url": "{{BASE_URL}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/auth/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"name\": \"Updated Name\",\\n  \"phone\": \"+254712345678\",\\n  \"address\": \"123 Main Street\",\\n  \"city\": \"Nairobi\",\\n  \"country\": \"Kenya\"\\n}"
+            },
+            "url": "{{BASE_URL}}/api/auth/update"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shopping Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/cart"
+          }
+        },
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"productId\": \"PASTE_PRODUCT_ID_HERE\",\\n  \"quantity\": 2\\n}"
+            },
+            "url": "{{BASE_URL}}/api/cart/add"
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"quantity\": 5\\n}"
+            },
+            "url": "{{BASE_URL}}/api/cart/update/PASTE_PRODUCT_ID_HERE"
+          }
+        },
+        {
+          "name": "Remove from Cart",
+          "request": {
+            "method": "DELETE",
+            "url": "{{BASE_URL}}/api/cart/remove/PASTE_PRODUCT_ID_HERE"
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "url": "{{BASE_URL}}/api/cart/clear"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"items\": [\\n    {\\n      \"productId\": \"PRODUCT_ID\",\\n      \"name\": \"Hydrating Face Moisturizer\",\\n      \"price\": 2500,\\n      \"quantity\": 2,\\n      \"image\": \"url\"\\n    }\\n  ],\\n  \"totalAmount\": 5000,\\n  \"shippingAddress\": {\\n    \"address\": \"123 Main Street\",\\n    \"city\": \"Nairobi\",\\n    \"country\": \"Kenya\"\\n  },\\n  \"phone\": \"+254712345678\"\\n}"
+            },
+            "url": "{{BASE_URL}}/api/orders"
+          }
+        },
+        {
+          "name": "Get My Orders",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/orders"
+          }
+        },
+        {
+          "name": "Get Order Details",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/orders/PASTE_ORDER_ID_HERE"
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"status\": \"shipped\"\\n}"
+            },
+            "url": "{{BASE_URL}}/api/orders/PASTE_ORDER_ID_HERE/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "item": [
+        {
+          "name": "Initiate Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"orderId\": \"PASTE_ORDER_ID_HERE\",\\n  \"phone\": \"+254712345678\"\\n}"
+            },
+            "url": "{{BASE_URL}}/api/payment/initiate"
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "GET",
+            "url": "{{BASE_URL}}/api/payment/verify/PASTE_ORDER_ID_HERE"
+          }
+        },
+        {
+          "name": "Payment Callback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\\n  \"orderId\": \"ORDER_ID\",\\n  \"transactionId\": \"TXN123456\",\\n  \"status\": \"success\",\\n  \"amount\": 5000\\n}"
+            },
+            "url": "{{BASE_URL}}/api/payment/callback"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "JWT_TOKEN",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
