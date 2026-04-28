@@ -85,7 +85,3 @@ process.on("SIGTERM", () => {
     console.log("HTTP server closed");
   });
 });
-const connectDB = require("./db");
-require("dotenv").config();
-
-connectDB();
