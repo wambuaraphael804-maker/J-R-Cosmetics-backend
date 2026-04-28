@@ -20,10 +20,8 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: [
-    "https://v0-website-deployment-sage.vercel.app",
-    "http://localhost:3000"
-  ],
+  origin: "https://v0-website-deployment-sage.vercel.app",
+          "http://localhost:3000"
   credentials: true
 }));
 app.use(express.json());
