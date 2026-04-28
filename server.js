@@ -19,6 +19,8 @@ const app = express();
 // DATABASE CONNECTION
 // ==========================
 connectDB();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 // ==========================
 // MIDDLEWARE
@@ -83,3 +85,7 @@ process.on("SIGTERM", () => {
     console.log("HTTP server closed");
   });
 });
+const connectDB = require("./db");
+require("dotenv").config();
+
+connectDB();
