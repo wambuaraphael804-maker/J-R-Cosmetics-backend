@@ -15,23 +15,15 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// ==========================
-// DATABASE CONNECTION
-// ==========================
+// Connect database
 connectDB();
-const mongoose = require("mongoose");
-require("dotenv").config();
 
-// ==========================
-// MIDDLEWARE
-// ==========================
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ==========================
-// ROUTES
-// ==========================
+// Routes
 app.get("/", (req, res) => {
   res.json({
     message: "🎀 J-R Cosmetics Backend API",
@@ -40,47 +32,33 @@ app.get("/", (req, res) => {
   });
 });
 
-// Health check
 app.get("/health", (req, res) => {
   res.json({ status: "✅ Server is healthy" });
 });
 
-// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payment", paymentRoutes);
 
-// ==========================
-// 404 HANDLER
-// ==========================
+// 404
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// ==========================
-// ERROR HANDLER MIDDLEWARE
-// ==========================
+// Error handler
 app.use(errorHandler);
 
-// ==========================
-// START SERVER
-// ==========================
+// Start server
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-  console.log(`\n✅ Server running on port ${PORT}`);
-  console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
-  console.log(`🌐 API Documentation:`);
-  console.log(`   GET  http://localhost:${PORT}/health`);
-  console.log(`   GET  http://localhost:${PORT}/api/products`);
-  console.log(`   POST http://localhost:${PORT}/api/auth/register\n`);
+  console.log(`✅ Server running on port ${PORT}`);
 });
 
-// Handle graceful shutdown
+// Graceful shutdown
 process.on("SIGTERM", () => {
-  console.log("SIGTERM signal received: closing HTTP server");
   server.close(() => {
     console.log("HTTP server closed");
   });
