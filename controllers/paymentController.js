@@ -198,7 +198,11 @@ exports.verifyPayment = async (req, res) => {
   try {
     const { orderId } = req.params;
 
-    const order = await Order.findById(orderId);
+    const order = await Order.findOne({
+      _id: orderId,
+      userId: req.user.id  // ✅ Security fix
+    });
+
     if (!order) {
       return res.status(404).json({ error: "Order not found" });
     }

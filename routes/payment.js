@@ -13,7 +13,3 @@ router.post("/callback", paymentCallback); // Webhook - no auth needed
 router.get("/verify/:orderId", authMiddleware, verifyPayment);
 
 module.exports = router;
-const order = await Order.findOne({
-  _id: orderId,
-  userId: req.user.id
-});
